@@ -1,0 +1,10 @@
+<script>
+    const ws = new WebSocket('ws://localhost:5000')
+    ws.onopen = (a) => {
+        ws.send('I am so excited that i am connected in ')
+    }
+
+    ws.onmessage = (event) => {
+        console.log('this is on message hallo2',event)
+    }
+</script>
