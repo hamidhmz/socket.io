@@ -1,10 +1,46 @@
-<script>
-    const ws = new WebSocket('ws://localhost:5000')
-    ws.onopen = (a) => {
-        ws.send('I am so excited that i am connected in ')
-    }
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div style="width: 100%" id="chatBox"></div>
+		<input type="text" id="myMSG" />
+		<button type="button" onclick="msgSender()" id="myMSGBtn">
+			Click me to send data to server.
+		</button>
+	</body>
+</html>
 
-    ws.onmessage = (event) => {
-        console.log('this is on message hallo2',event)
-    }
+<script>
+	const ws = new WebSocket('ws://localhost:5000');
+	ws.onopen = (a) => {
+		ws.send('I am so excited that i am connected in ');
+	};
+
+	ws.onmessage = (event) => {
+		const node = document.createElement('div'); // Create a <li> node
+		const textNode = document.createTextNode(event.data); // Create a text node
+		node.appendChild(textNode);
+		document.getElementById('chatBox').appendChild(node);
+
+		document.getElementById('myMSG').value = '';
+	};
+
+	function msgSender() {
+		ws.send(document.getElementById('myMSG').value);
+	}
+	const input = document.getElementById('myMSG');
+	input.addEventListener('keyup', function (event) {
+		// Number 13 is the "Enter" key on the keyboard
+		if (event.keyCode === 13) {
+			// Cancel the default action, if needed
+			event.preventDefault();
+			// Trigger the button element with a click
+			document.getElementById('myMSGBtn').click();
+		}
+	});
 </script>

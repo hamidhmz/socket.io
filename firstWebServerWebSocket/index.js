@@ -12,15 +12,16 @@ const wss = new websocket.Server({ server });
 
 wss.on('headers', (headers, req) => {
 	// when new connection has been triggered
-	console.log('this is headers',headers);
+	console.log('this is headers', headers);
 });
 
 wss.on('connection', (ws, req) => {
 	ws.on('message', (msg) => {
 		console.log('-----', msg, '------');
-    });
-    
-    ws.send('welcome to websocket server');
+		ws.send(msg);
+	});
+
+	ws.send('welcome to websocket server');
 });
 
 console.log('Server running at http://localhost:5000/');
